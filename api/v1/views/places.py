@@ -123,10 +123,9 @@ def search_places():
     cities_list = data.get("cities", [])
     amenities_list = data.get("amenities", [])
 
-    places = []
-    if not request.data or (len(states_list) == 0
-                            and len(cities_list) == 0
-                            and len(amenities_list) == 0):
+    if data == {} or (len(states_list) == 0
+        and len(cities_list) == 0
+        and len(amenities_list) == 0):
         places = [place.to_dict() for place in storage.all(Place)]
         return jsonify(places), 200
 
