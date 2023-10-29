@@ -125,7 +125,7 @@ def search_places():
     if not request.data or (len(states_list) == 0
                             and len(cities_list) == 0
                             and len(amenities_list) == 0):
-        places = storage.all(Place)
+        places = [place for place in storage.all(Place)]
 
     if len(states_list) != 0:
         states_objs = [storage.get(State, id) for id in states_list]
