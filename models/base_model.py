@@ -10,6 +10,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+from hashlib import md5
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -30,6 +31,9 @@ class BaseModel:
         """Initialization of the base model"""
         if kwargs:
             for key, value in kwargs.items():
+                if key == "password":
+                    setattr(self, key, md5(value.encode()).hexdigest())
+                    continue
                 if key != "__class__":
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
@@ -61,6 +65,8 @@ class BaseModel:
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
+        if models.storage_t == "db":
+            del new_dict["password"]
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
