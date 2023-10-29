@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 View for amenities objects that handles
-GET DELETE POST actions
+get post delete actions
 """
 
 from api.v1.views import app_views
