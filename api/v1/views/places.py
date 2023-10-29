@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.place import Place
 from models.user import User
+from models.amenity import Amenity
 from flask import abort, jsonify, request
 
 
