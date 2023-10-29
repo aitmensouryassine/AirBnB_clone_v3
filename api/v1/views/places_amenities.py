@@ -12,7 +12,8 @@ from models.user import User
 from flask import abort, jsonify, request
 
 
-@app_views.get("/places/<place_id>/amenities", strict_slashes=False)
+@app_views.route("/places/<place_id>/amenities", methods=["GET"],
+                 strict_slashes=False)
 def place_amenities(place_id):
     """Method to get all place amenities"""
     place = storage.get(Place, place_id)
@@ -26,7 +27,7 @@ def place_amenities(place_id):
 @app_views.delete("/places/<place_id>/amenities/<amenity_id>",
                   strict_slashes=False)
 def delete_amenity_linked_to_place(place_id, amenity_id):
-    """delete amenity linked to a place"""
+    """Delete amenity linked to a place"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -46,7 +47,7 @@ def delete_amenity_linked_to_place(place_id, amenity_id):
 
 @app_views.post("places/<place_id>/amenities/<amenity_id>")
 def link_amenity(place_id, amenity_id):
-    """link amenity to a place"""
+    """Link amenity to a place"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
